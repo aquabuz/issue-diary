@@ -16,3 +16,76 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
    1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
    2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+
+## supabase table query
+
+```tsx
+-- Supabase AI is experimental and may produce incorrect answers
+-- Always verify the output before executing
+
+create table
+  public.profiles (
+    id uuid references auth.users not null,
+    updated_at timestamp with time zone,
+    username text unique,
+    avatar_url text,
+    website text,
+    primary key (id),
+    unique (username),
+    constraint username_length check (char_length(username) >= 3)
+  );
+
+alter table profiles enable row level security;
+
+create policy "Public profiles are viewable by everyone." on profiles for
+select
+  using (true);
+
+create policy "User can insert their own profile." on profiles for insert
+with
+  check (auth.uid () = id);
+
+begin;
+
+drop publication if exists supabase_realtime;
+
+create publication supabase_realtime;
+
+commit;
+
+alter publication supabase_realtime
+add table profiles;
+
+insert into
+  storage.buckets (id, name)
+values
+  ('avatars', 'avatars');
+
+create policy "Avatar images are publicly accessible." on storage.objects for
+select
+with
+  check (bucket_id = 'avatars');
+
+create policy "Avatar can upload an avatar." on storage.objects for insert
+with
+  check (bucket_id = 'avatars');
+
+create policy "Avatar can upload an avatar." on storage.objects
+for update
+with
+  check (bucket_id = 'avatars');
+
+create policy "Avatar can upload an avatar." on storage.objects
+for update
+with
+  check (bucket_id = 'avatars');
+
+create policy "Avatar images are publicly accessible." on storage.objects for
+select
+with
+  check (bucket_id = 'avatars');
+
+create policy "Avatar can upload an avatar." on storage.objects for insert
+with
+  check (bucket_id = 'avatars');
+```
