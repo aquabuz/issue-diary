@@ -18,13 +18,14 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
 
     /* Customize */
-    // "baseUrl": "./"
-    // "paths": {
-    //   "vue": ["node_modules/vue"]
-    // }
+    "baseUrl": "./",
+    "paths": {
+      "vue": ["node_modules/vue"],
+      "@/*": ["src/*"]
+    }
   },
   "include": [
     "src/**/*.ts",
@@ -34,7 +35,5 @@
     "global.d.ts",
     "env.d.ts"
   ],
-  "references": [
-    { "path": "./tsconfig.node.json" }
-  ]
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
