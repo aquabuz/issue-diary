@@ -27,14 +27,11 @@ export default defineConfig({
   server: {},
   define: {
     'process.env': {
-      VITE_SUPABASE_URL: JSON.stringify(
-        process.env.VITE_SUPABASE_URL,
-      ),
-      VITE_SUPABASE_ANON_KEY: JSON.stringify(
-        process.env.VITE_SUPABASE_ANON_KEY,
-      ),
-      VITE_APP_API_KEY: JSON.stringify(process.env.VITE_APP_API_KEY),
-      VITE_APP_ENV: JSON.stringify(process.env.VITE_APP_ENV),
+      VITE_SUPABASE_URL: process.env.VITE_SUPABASE_URL,
+      VITE_SUPABASE_ANON_KEY: process.env.VITE_SUPABASE_ANON_KEY,
+      VITE_APP_API_KEY: process.env.VITE_APP_API_KEY,
+      VITE_APP_ENV: process.env.VITE_APP_ENV,
+      VITE_API_URL: process.env.VITE_API_URL,
     },
   },
 });
